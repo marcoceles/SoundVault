@@ -9,6 +9,7 @@ import SwiftUI
 
 struct PlaylistRowView: View {
     let playlist: Playlist
+    let songCount: Int
 
     @Environment(\.colorScheme) private var colorScheme
 
@@ -33,7 +34,7 @@ struct PlaylistRowView: View {
                     .font(.title3)
                     .fontWeight(.semibold)
                     .foregroundStyle(AppTheme.primaryText)
-                Text("\(playlist.songsArray.count) songs")
+                Text("\(songCount) songs")
                     .font(.subheadline)
                     .foregroundStyle(AppTheme.secondaryText)
             }

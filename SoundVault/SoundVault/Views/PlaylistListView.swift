@@ -27,7 +27,10 @@ struct PlaylistListView: View {
                         NavigationLink {
                             SongListView(playlist: playlist)
                         } label: {
-                            PlaylistRowView(playlist: playlist)
+                            PlaylistRowView(
+                                playlist: playlist,
+                                songCount: playlist.songs?.count ?? 0
+                            )
                         }
                         .transition(.asymmetric(
                             insertion: .move(edge: .leading).combined(with: .opacity),
