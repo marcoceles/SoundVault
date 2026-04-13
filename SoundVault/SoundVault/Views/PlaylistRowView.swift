@@ -11,23 +11,9 @@ struct PlaylistRowView: View {
     let playlist: Playlist
     let songCount: Int
 
-    @Environment(\.colorScheme) private var colorScheme
-
     var body: some View {
         HStack(spacing: 16) {
-            ZStack {
-                RoundedRectangle(cornerRadius: 10)
-                    .fill(Color(hex: playlist.artworkColor ?? "#888888"))
-                    .frame(width: 52, height: 52)
-                    .shadow(
-                        color: .black.opacity(colorScheme == .dark ? 0.4 : 0.15),
-                        radius: 4, y: 2
-                    )
-                Image(systemName: "music.note")
-                    .font(.title3)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(.white)
-            }
+            PlaylistCoverView(playlist: playlist, size: 52)
 
             VStack(alignment: .leading, spacing: 3) {
                 Text(playlist.name ?? "")
