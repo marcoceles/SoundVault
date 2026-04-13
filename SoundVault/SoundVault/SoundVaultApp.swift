@@ -5,8 +5,8 @@
 //  Created by Marco Celestino on 13/04/26.
 //
 
-import SwiftUI
 import CoreData
+import SwiftUI
 
 @main
 struct SoundVaultApp: App {
@@ -14,8 +14,10 @@ struct SoundVaultApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+            NavigationStack {
+                PlaylistListView()
+            }
+            .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
 }
