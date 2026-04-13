@@ -52,7 +52,6 @@ struct SongRowView: View {
         }
         .frame(minHeight: 56)
         .listRowInsets(EdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20))
-        .alignmentGuide(.listRowSeparatorLeading) { _ in 32 + 14 + 20 }
         .onAppear {
             guard isNowPlaying else { return }
             withAnimation(.easeInOut(duration: 0.9).repeatForever(autoreverses: true)) {
