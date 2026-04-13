@@ -32,6 +32,7 @@ struct SongListView: View {
                         .listRowInsets(.init())
                         .listRowBackground(Color.clear)
                         .listSectionSeparator(.hidden)
+                        .id(viewModel.playlistVersion)
                     }
 
                     // MARK: - Songs
@@ -63,9 +64,20 @@ struct SongListView: View {
                 }
                 .tint(AppTheme.accent)
             }
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button("Edit") {
+                    viewModel.showingEditSheet = true
+                }
+                .tint(AppTheme.accent)
+            }
         }
         .sheet(isPresented: $viewModel.showingAddSheet) {
             AddSongSheet(playlist: viewModel.playlist)
+        }
+        .sheet(isPresented: $viewModel.showingEditSheet, onDismiss: {
+            viewModel.bumpPlaylistVersion()
+        }) {
+            EditPlaylistSheet(playlist: viewModel.playlist)
         }
     }
 

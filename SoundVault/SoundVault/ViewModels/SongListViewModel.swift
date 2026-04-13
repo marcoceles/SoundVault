@@ -13,6 +13,8 @@ final class SongListViewModel: NSObject {
     let playlist: Playlist
     var nowPlayingID: UUID?
     var showingAddSheet = false
+    var showingEditSheet = false
+    private(set) var playlistVersion = 0
 
     private let context: NSManagedObjectContext
     private var frc: NSFetchedResultsController<Song>?
@@ -49,6 +51,10 @@ final class SongListViewModel: NSObject {
 	func setNowPlaying(id: UUID?) {
 		nowPlayingID = id
 	}
+
+    func bumpPlaylistVersion() {
+        playlistVersion += 1
+    }
 }
 
 extension SongListViewModel: NSFetchedResultsControllerDelegate {
