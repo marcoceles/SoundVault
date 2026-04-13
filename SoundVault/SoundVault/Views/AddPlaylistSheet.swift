@@ -6,11 +6,13 @@
 //
 
 import CoreData
+import PhotosUI
 import SwiftUI
 
 struct AddPlaylistSheet: View {
     @Environment(\.dismiss) private var dismiss
     @State private var viewModel: AddPlaylistViewModel
+    @State private var selectedItem: PhotosPickerItem?
 
     init(viewModel: AddPlaylistViewModel = AddPlaylistViewModel()) {
         _viewModel = State(initialValue: viewModel)
@@ -19,6 +21,10 @@ struct AddPlaylistSheet: View {
     var body: some View {
         NavigationStack {
             Form {
+                Section {
+                    coverPicker
+                }
+
                 Section("Playlist Name") {
                     TextField("e.g. Morning Chill", text: $viewModel.name)
                         .submitLabel(.done)
@@ -41,8 +47,47 @@ struct AddPlaylistSheet: View {
                 }
             }
         }
-        .presentationDetents([.height(240)])
+        .presentationDetents([.medium])
         .presentationDragIndicator(.visible)
+        .onChange(of: selectedItem) { _, newItem in
+            guard let newItem else { return }
+			viewModel.loadImage(newItem)
+        }
+    }
+
+	// MARK: - Image Picker
+    private var coverPicker: some View {
+        HStack {
+            Spacer()
+            PhotosPicker(selection: $selectedItem, matching: .images) {
+                ZStack {
+					if let previewImage = viewModel.previewImage {
+                        Image(uiImage: previewImage)
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 80, height: 80)
+                            .clipShape(RoundedRectangle(cornerRadius: 15))
+                    } else {
+                        RoundedRectangle(cornerRadius: 15)
+                            .fill(AppTheme.surface)
+                            .frame(width: 80, height: 80)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 15)
+                                    .strokeBorder(AppTheme.secondaryText.opacity(0.3), lineWidth: 1)
+                            )
+						if viewModel.isLoadingImage {
+                            ProgressView()
+                        } else {
+                            Image(systemName: "photo.badge.plus")
+                                .font(.title2)
+                                .foregroundStyle(AppTheme.accent)
+                        }
+                    }
+                }
+            }
+            Spacer()
+        }
+        .listRowBackground(Color.clear)
     }
 }
 
