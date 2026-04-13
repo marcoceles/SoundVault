@@ -24,7 +24,11 @@ struct SongListView: View {
             } else {
                 List {
                     ForEach(viewModel.songs) { song in
-                        SongRowView(song: song, isNowPlaying: song.id == viewModel.nowPlayingID)
+						Button {
+							viewModel.setNowPlaying(id: song.id)
+						} label: {
+							SongRowView(song: song, isNowPlaying: song.id == viewModel.nowPlayingID)
+						}
                     }
                     .onDelete { viewModel.delete(at: $0) }
                 }

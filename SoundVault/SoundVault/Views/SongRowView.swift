@@ -60,6 +60,4 @@ struct SongRowView: View {
             }
         }
     }
-
-
 }

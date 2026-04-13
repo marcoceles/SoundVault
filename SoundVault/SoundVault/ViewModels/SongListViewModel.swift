@@ -38,12 +38,17 @@ final class SongListViewModel: NSObject {
         frc?.delegate = self
         try? frc?.performFetch()
         songs = frc?.fetchedObjects ?? []
+		nowPlayingID = songs.first?.id
     }
 
     func delete(at offsets: IndexSet) {
         offsets.map { songs[$0] }.forEach(context.delete)
         PersistenceController.shared.save(context)
     }
+
+	func setNowPlaying(id: UUID?) {
+		nowPlayingID = id
+	}
 }
 
 extension SongListViewModel: NSFetchedResultsControllerDelegate {
