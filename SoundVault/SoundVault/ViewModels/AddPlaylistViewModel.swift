@@ -6,10 +6,15 @@
 //
 
 import CoreData
+import UIKit
+import _PhotosUI_SwiftUI
 
 @Observable
 final class AddPlaylistViewModel {
     var name = ""
+    var selectedImageData: Data?
+	var previewImage: UIImage?
+	var isLoadingImage: Bool = false
 
     private let context: NSManagedObjectContext
     private let palette = [
@@ -31,6 +36,20 @@ final class AddPlaylistViewModel {
         playlist.name = name.trimmingCharacters(in: .whitespaces)
         playlist.artworkColor = palette.randomElement()!
         playlist.createdAt = Date()
+        playlist.coverImageData = selectedImageData
         PersistenceController.shared.save(context)
     }
+
+	func loadImage(_ pickerItem:  PhotosPickerItem) {
+		isLoadingImage = true
+		Task {
+			if let data = try? await pickerItem.loadTransferable(type: Data.self),
+			   let image = UIImage(data: data),
+			   let compressed = image.compressed() {
+				previewImage = UIImage(data: compressed)
+				selectedImageData = compressed
+			}
+			isLoadingImage = false
+		}
+	}
 }
