@@ -15,7 +15,7 @@ final class SongListViewModel: NSObject {
     var showingAddSheet = false
 
     private let context: NSManagedObjectContext
-    private var frc: NSFetchedResultsController<Song>!
+    private var frc: NSFetchedResultsController<Song>?
 
     init(
         playlist: Playlist,
@@ -35,10 +35,9 @@ final class SongListViewModel: NSObject {
             sectionNameKeyPath: nil,
             cacheName: nil
         )
-        frc.delegate = self
-        try? frc.performFetch()
-        songs = frc.fetchedObjects ?? []
-        nowPlayingID = songs.randomElement()?.id
+        frc?.delegate = self
+        try? frc?.performFetch()
+        songs = frc?.fetchedObjects ?? []
     }
 
     func delete(at offsets: IndexSet) {
@@ -52,7 +51,7 @@ extension SongListViewModel: NSFetchedResultsControllerDelegate {
         _ controller: NSFetchedResultsController<NSFetchRequestResult>
     ) {
         MainActor.assumeIsolated {
-            songs = frc.fetchedObjects ?? []
+            songs = frc?.fetchedObjects ?? []
         }
     }
 }
