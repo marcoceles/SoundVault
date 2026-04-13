@@ -16,13 +16,22 @@ struct SongListView: View {
     }
 
     var body: some View {
-        List {
-            ForEach(viewModel.songs) { song in
-                SongRowView(song: song, isNowPlaying: song.id == viewModel.nowPlayingID)
+        ZStack {
+            AppTheme.background.ignoresSafeArea()
+
+            if viewModel.songs.isEmpty {
+                emptyState
+            } else {
+                List {
+                    ForEach(viewModel.songs) { song in
+                        SongRowView(song: song, isNowPlaying: song.id == viewModel.nowPlayingID)
+                    }
+                    .onDelete { viewModel.delete(at: $0) }
+                }
+                .listStyle(.insetGrouped)
+                .scrollContentBackground(.hidden)
             }
-            .onDelete { viewModel.delete(at: $0) }
         }
-        .listStyle(.insetGrouped)
         .navigationTitle(viewModel.playlist.name ?? "")
         .navigationBarTitleDisplayMode(.large)
         .toolbar {
@@ -38,6 +47,22 @@ struct SongListView: View {
         }
         .sheet(isPresented: $viewModel.showingAddSheet) {
             AddSongSheet(playlist: viewModel.playlist)
+        }
+    }
+
+    private var emptyState: some View {
+        VStack(spacing: 16) {
+            Image(systemName: "music.note.list")
+                .font(.system(size: 56))
+                .foregroundStyle(AppTheme.accent)
+                .symbolEffect(.variableColor.iterative.reversing)
+            Text("No songs yet.")
+                .font(.title3)
+                .fontWeight(.semibold)
+                .foregroundStyle(AppTheme.primaryText)
+            Text("Tap + to add one.")
+                .font(.subheadline)
+                .foregroundStyle(AppTheme.secondaryText)
         }
     }
 }
