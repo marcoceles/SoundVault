@@ -20,16 +20,12 @@ struct AddPlaylistSheet: View {
 
     var body: some View {
         NavigationStack {
-            Form {
-                Section {
-                    coverPicker
-                }
-
-                Section("Playlist Name") {
-                    TextField("e.g. Morning Chill", text: $viewModel.name)
-                        .submitLabel(.done)
-                }
-            }
+            PlaylistFormView(
+                name: $viewModel.name,
+                selectedItem: $selectedItem,
+                previewImage: viewModel.previewImage,
+                isLoadingImage: viewModel.isLoadingImage
+            )
             .navigationTitle("New Playlist")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -49,45 +45,10 @@ struct AddPlaylistSheet: View {
         }
         .presentationDetents([.medium])
         .presentationDragIndicator(.visible)
-        .onChange(of: selectedItem) { _, newItem in
-            guard let newItem else { return }
-			viewModel.loadImage(newItem)
+        .task(id: selectedItem) {
+            guard let item = selectedItem else { return }
+            await viewModel.loadImage(item)
         }
-    }
-
-	// MARK: - Image Picker
-    private var coverPicker: some View {
-        HStack {
-            Spacer()
-            PhotosPicker(selection: $selectedItem, matching: .images) {
-                ZStack {
-					if let previewImage = viewModel.previewImage {
-                        Image(uiImage: previewImage)
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 80, height: 80)
-                            .clipShape(RoundedRectangle(cornerRadius: 15))
-                    } else {
-                        RoundedRectangle(cornerRadius: 15)
-                            .fill(AppTheme.surface)
-                            .frame(width: 80, height: 80)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 15)
-                                    .strokeBorder(AppTheme.secondaryText.opacity(0.3), lineWidth: 1)
-                            )
-						if viewModel.isLoadingImage {
-                            ProgressView()
-                        } else {
-                            Image(systemName: "photo.badge.plus")
-                                .font(.title2)
-                                .foregroundStyle(AppTheme.accent)
-                        }
-                    }
-                }
-            }
-            Spacer()
-        }
-        .listRowBackground(Color.clear)
     }
 }
 

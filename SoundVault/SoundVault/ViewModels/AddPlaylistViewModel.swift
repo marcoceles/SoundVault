@@ -40,16 +40,13 @@ final class AddPlaylistViewModel {
         PersistenceController.shared.save(context)
     }
 
-	func loadImage(_ pickerItem:  PhotosPickerItem) {
-		isLoadingImage = true
-		Task {
-			if let data = try? await pickerItem.loadTransferable(type: Data.self),
-			   let image = UIImage(data: data),
-			   let compressed = image.compressed() {
-				previewImage = UIImage(data: compressed)
-				selectedImageData = compressed
-			}
-			isLoadingImage = false
-		}
-	}
+    func loadImage(_ pickerItem: PhotosPickerItem) async {
+        isLoadingImage = true
+        defer { isLoadingImage = false }
+        guard let data = try? await pickerItem.loadTransferable(type: Data.self),
+              let image = UIImage(data: data),
+              let compressed = image.compressed() else { return }
+        previewImage = UIImage(data: compressed)
+        selectedImageData = compressed
+    }
 }
