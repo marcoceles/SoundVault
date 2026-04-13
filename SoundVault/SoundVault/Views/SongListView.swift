@@ -23,21 +23,36 @@ struct SongListView: View {
                 emptyState
             } else {
                 List {
-                    ForEach(viewModel.songs) { song in
-						Button {
-							viewModel.setNowPlaying(id: song.id)
-						} label: {
-							SongRowView(song: song, isNowPlaying: song.id == viewModel.nowPlayingID)
-						}
+                    // MARK: - Header
+                    Section {
+                        PlaylistHeaderView(
+                            playlist: viewModel.playlist,
+                            songCount: viewModel.songs.count
+                        )
+                        .listRowInsets(.init())
+                        .listRowBackground(Color.clear)
+                        .listSectionSeparator(.hidden)
                     }
-                    .onDelete { viewModel.delete(at: $0) }
+
+                    // MARK: - Songs
+                    Section {
+                        ForEach(viewModel.songs) { song in
+                            Button {
+                                viewModel.setNowPlaying(id: song.id)
+                            } label: {
+                                SongRowView(song: song, isNowPlaying: song.id == viewModel.nowPlayingID)
+                            }
+                            .listRowBackground(AppTheme.surface)
+                        }
+                        .onDelete { viewModel.delete(at: $0) }
+                    }
                 }
-                .listStyle(.insetGrouped)
+                .listStyle(.plain)
                 .scrollContentBackground(.hidden)
             }
         }
         .navigationTitle(viewModel.playlist.name ?? "")
-        .navigationBarTitleDisplayMode(.large)
+        .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
