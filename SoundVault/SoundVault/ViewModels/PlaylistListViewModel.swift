@@ -9,11 +9,12 @@ import CoreData
 
 @Observable
 final class PlaylistListViewModel: NSObject {
-    private(set) var playlists: [Playlist] = []
+    private(set) var rowViewModels: [PlaylistRowViewModel] = []
     var showingAddSheet = false
 
     private let context: NSManagedObjectContext
     private var frc: NSFetchedResultsController<Playlist>!
+    private var contextObserver: NSObjectProtocol?
 
     init(context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
         self.context = context
@@ -30,12 +31,39 @@ final class PlaylistListViewModel: NSObject {
         )
         frc.delegate = self
         try? frc.performFetch()
-        playlists = frc.fetchedObjects ?? []
+        rowViewModels = (frc.fetchedObjects ?? []).map(PlaylistRowViewModel.init)
+
+        contextObserver = NotificationCenter.default.addObserver(
+            forName: NSManagedObjectContext.didChangeObjectsNotification,
+            object: context,
+            queue: .main
+        ) { [weak self] notification in
+            self?.handleContextChange(notification)
+        }
+    }
+
+    deinit {
+        if let observer = contextObserver {
+            NotificationCenter.default.removeObserver(observer)
+        }
     }
 
     func delete(at offsets: IndexSet) {
-        offsets.map { playlists[$0] }.forEach(context.delete)
+        offsets.map { rowViewModels[$0].playlist }.forEach(context.delete)
         PersistenceController.shared.save(context)
+    }
+
+    // MARK: - Private
+
+    private func handleContextChange(_ notification: Notification) {
+        guard let updated = notification.userInfo?[NSUpdatedObjectsKey] as? Set<NSManagedObject> else { return }
+        let updatedPlaylists = updated.compactMap { $0 as? Playlist }
+        guard !updatedPlaylists.isEmpty else { return }
+
+        let updatedIDs = Set(updatedPlaylists.compactMap { $0.id })
+        for rowVM in rowViewModels where updatedIDs.contains(rowVM.id) {
+            rowVM.sync()
+        }
     }
 }
 
@@ -44,7 +72,16 @@ extension PlaylistListViewModel: NSFetchedResultsControllerDelegate {
         _ controller: NSFetchedResultsController<NSFetchRequestResult>
     ) {
         MainActor.assumeIsolated {
-            playlists = frc.fetchedObjects ?? []
+            let fetched = frc.fetchedObjects ?? []
+            let existingByID = Dictionary(uniqueKeysWithValues: rowViewModels.map { ($0.id, $0) })
+            rowViewModels = fetched.map { playlist in
+                let id = playlist.id ?? UUID()
+                if let existing = existingByID[id] {
+                    existing.sync()
+                    return existing
+                }
+                return PlaylistRowViewModel(playlist: playlist)
+            }
         }
     }
 }

@@ -8,19 +8,22 @@
 import SwiftUI
 
 struct PlaylistRowView: View {
-    let playlist: Playlist
-    let songCount: Int
+    let viewModel: PlaylistRowViewModel
 
     var body: some View {
         HStack(spacing: 16) {
-            PlaylistCoverView(playlist: playlist, size: 52)
+            PlaylistCoverView(
+                artworkColor: viewModel.artworkColor,
+                coverImageData: viewModel.coverImageData,
+                size: 52
+            )
 
             VStack(alignment: .leading, spacing: 3) {
-                Text(playlist.name ?? "")
+                Text(viewModel.name)
                     .font(.title3)
                     .fontWeight(.semibold)
                     .foregroundStyle(AppTheme.primaryText)
-                Text("\(songCount) songs")
+                Text("\(viewModel.songCount) songs")
                     .font(.subheadline)
                     .foregroundStyle(AppTheme.secondaryText)
             }

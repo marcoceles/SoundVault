@@ -19,18 +19,15 @@ struct PlaylistListView: View {
         ZStack {
             AppTheme.background.ignoresSafeArea()
 
-            if viewModel.playlists.isEmpty {
+            if viewModel.rowViewModels.isEmpty {
                 emptyState
             } else {
                 List {
-                    ForEach(viewModel.playlists) { playlist in
+                    ForEach(viewModel.rowViewModels) { rowVM in
                         NavigationLink {
-                            SongListView(playlist: playlist)
+                            SongListView(playlist: rowVM.playlist)
                         } label: {
-                            PlaylistRowView(
-                                playlist: playlist,
-                                songCount: playlist.songs?.count ?? 0
-                            )
+                            PlaylistRowView(viewModel: rowVM)
                         }
                         .transition(.asymmetric(
                             insertion: .move(edge: .leading).combined(with: .opacity),
