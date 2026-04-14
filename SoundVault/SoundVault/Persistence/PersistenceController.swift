@@ -21,8 +21,8 @@ struct PersistenceController {
 
     init(inMemory: Bool = false) {
         container = NSPersistentContainer(name: "SoundVault")
-		if inMemory {
-			container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
+        if inMemory {
+            container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
         }
         if let description = container.persistentStoreDescriptions.first {
             description.setOption(true as NSNumber, forKey: NSMigratePersistentStoresAutomaticallyOption)
