@@ -1,0 +1,76 @@
+{
+  "playlists": [
+    {
+      "name": "Chill Vibes",
+      "artworkColor": "#A8D8EA",
+      "songs": [
+        { "title": "Ocean Eyes", "artist": "Billie Eilish", "duration": 198 },
+        { "title": "Lovely", "artist": "Billie Eilish & Khalid", "duration": 200 },
+        { "title": "Sunflower", "artist": "Post Malone & Swae Lee", "duration": 158 },
+        { "title": "cardigan", "artist": "Taylor Swift", "duration": 239 },
+        { "title": "Golden Hour", "artist": "JVKE", "duration": 209 },
+        { "title": "Breathe", "artist": "Télépopmusik", "duration": 268 }
+      ]
+    },
+    {
+      "name": "Workout Fuel",
+      "artworkColor": "#FF6B6B",
+      "songs": [
+        { "title": "Blinding Lights", "artist": "The Weeknd", "duration": 200 },
+        { "title": "HUMBLE.", "artist": "Kendrick Lamar", "duration": 177 },
+        { "title": "Power", "artist": "Kanye West", "duration": 292 },
+        { "title": "Till I Collapse", "artist": "Eminem", "duration": 297 },
+        { "title": "Eye of the Tiger", "artist": "Survivor", "duration": 244 },
+        { "title": "Can't Hold Us", "artist": "Macklemore & Ryan Lewis", "duration": 257 }
+      ]
+    },
+    {
+      "name": "Deep Focus",
+      "artworkColor": "#74B9A0",
+      "songs": [
+        { "title": "Experience", "artist": "Ludovico Einaudi", "duration": 345 },
+        { "title": "Clair de Lune", "artist": "Claude Debussy", "duration": 318 },
+        { "title": "Nuvole Bianche", "artist": "Ludovico Einaudi", "duration": 367 },
+        { "title": "River Flows in You", "artist": "Yiruma", "duration": 213 },
+        { "title": "Comptine d'un autre été", "artist": "Yann Tiersen", "duration": 148 },
+        { "title": "Gymnopédie No.1", "artist": "Erik Satie", "duration": 196 }
+      ]
+    },
+    {
+      "name": "Late Night Jazz",
+      "artworkColor": "#2D3561",
+      "songs": [
+        { "title": "So What", "artist": "Miles Davis", "duration": 562 },
+        { "title": "Take Five", "artist": "Dave Brubeck Quartet", "duration": 324 },
+        { "title": "Autumn Leaves", "artist": "Bill Evans Trio", "duration": 348 },
+        { "title": "My Favorite Things", "artist": "John Coltrane", "duration": 800 },
+        { "title": "Round Midnight", "artist": "Thelonious Monk", "duration": 338 },
+        { "title": "All Blues", "artist": "Miles Davis", "duration": 694 }
+      ]
+    },
+    {
+      "name": "Road Trip Anthems",
+      "artworkColor": "#F9A825",
+      "songs": [
+        { "title": "Don't Stop Believin'", "artist": "Journey", "duration": 251 },
+        { "title": "Bohemian Rhapsody", "artist": "Queen", "duration": 355 },
+        { "title": "Hotel California", "artist": "Eagles", "duration": 391 },
+        { "title": "Sweet Home Alabama", "artist": "Lynyrd Skynyrd", "duration": 284 },
+        { "title": "Mr. Brightside", "artist": "The Killers", "duration": 222 },
+        { "title": "Africa", "artist": "Toto", "duration": 295 }
+      ]
+    },
+    {
+      "name": "Indie Discoveries",
+      "artworkColor": "#C77DFF",
+      "songs": [
+        { "title": "Motion Sickness", "artist": "Phoebe Bridgers", "duration": 232 },
+        { "title": "Do I Wanna Know?", "artist": "Arctic Monkeys", "duration": 272 },
+        { "title": "Electric Feel", "artist": "MGMT", "duration": 230 },
+        { "title": "Such Great Heights", "artist": "The Postal Service", "duration": 264 },
+        { "title": "Ribs", "artist": "Lorde", "duration": 231 },
+        { "title": "Little Talks", "artist": "Of Monsters and Men", "duration": 266 }
+      ]
+    }
+  ]
+}
