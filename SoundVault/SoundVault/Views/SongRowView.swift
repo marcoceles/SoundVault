@@ -58,5 +58,16 @@ struct SongRowView: View {
                 pulse = true
             }
         }
+        .onChange(of: isNowPlaying) { _, nowPlaying in
+            if nowPlaying {
+                withAnimation(.easeInOut(duration: 0.9).repeatForever(autoreverses: true)) {
+                    pulse = true
+                }
+            } else {
+                withAnimation(.default) {
+                    pulse = false
+                }
+            }
+        }
     }
 }
