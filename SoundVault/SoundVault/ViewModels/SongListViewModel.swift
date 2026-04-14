@@ -9,7 +9,7 @@ import CoreData
 
 @Observable
 final class SongListViewModel: NSObject {
-    private(set) var songs: [Song] = []
+    private(set) var songViewModels: [SongRowViewModel] = []
     let playlist: Playlist
     var nowPlayingID: UUID?
     var showingAddSheet = false
@@ -39,18 +39,18 @@ final class SongListViewModel: NSObject {
         )
         frc?.delegate = self
         try? frc?.performFetch()
-        songs = frc?.fetchedObjects ?? []
-		nowPlayingID = songs.first?.id
+        songViewModels = (frc?.fetchedObjects ?? []).map(SongRowViewModel.init)
+        nowPlayingID = songViewModels.first?.id
     }
 
     func delete(at offsets: IndexSet) {
-        offsets.map { songs[$0] }.forEach(context.delete)
+        offsets.map { songViewModels[$0].song }.forEach(context.delete)
         PersistenceController.shared.save(context)
     }
 
-	func setNowPlaying(id: UUID?) {
-		nowPlayingID = id
-	}
+    func setNowPlaying(id: UUID?) {
+        nowPlayingID = id
+    }
 
     func bumpPlaylistVersion() {
         playlistVersion += 1
@@ -62,7 +62,16 @@ extension SongListViewModel: NSFetchedResultsControllerDelegate {
         _ controller: NSFetchedResultsController<NSFetchRequestResult>
     ) {
         MainActor.assumeIsolated {
-            songs = frc?.fetchedObjects ?? []
+            let fetched = frc?.fetchedObjects ?? []
+            let existingByID = Dictionary(uniqueKeysWithValues: songViewModels.map { ($0.id, $0) })
+            songViewModels = fetched.map { song in
+                let id = song.id ?? UUID()
+                if let existing = existingByID[id] {
+                    existing.sync()
+                    return existing
+                }
+                return SongRowViewModel(song: song)
+            }
         }
     }
 }

@@ -19,7 +19,7 @@ struct SongListView: View {
         ZStack {
             AppTheme.background.ignoresSafeArea()
 
-            if viewModel.songs.isEmpty {
+            if viewModel.songViewModels.isEmpty {
                 emptyState
             } else {
                 List {
@@ -27,7 +27,7 @@ struct SongListView: View {
                     Section {
                         PlaylistHeaderView(
                             playlist: viewModel.playlist,
-                            songCount: viewModel.songs.count
+                            songCount: viewModel.songViewModels.count
                         )
                         .listRowInsets(.init())
                         .listRowBackground(Color.clear)
@@ -37,11 +37,11 @@ struct SongListView: View {
 
                     // MARK: - Songs
                     Section {
-                        ForEach(viewModel.songs) { song in
+                        ForEach(viewModel.songViewModels) { songVM in
                             Button {
-                                viewModel.setNowPlaying(id: song.id)
+                                viewModel.setNowPlaying(id: songVM.id)
                             } label: {
-                                SongRowView(song: song, isNowPlaying: song.id == viewModel.nowPlayingID)
+                                SongRowView(viewModel: songVM, isNowPlaying: songVM.id == viewModel.nowPlayingID)
                             }
                             .listRowBackground(AppTheme.surface)
                         }

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SongRowView: View {
-    let song: Song
+    let viewModel: SongRowViewModel
     let isNowPlaying: Bool
 
     @State private var pulse = false
@@ -25,7 +25,7 @@ struct SongRowView: View {
                         .fontWeight(.bold)
                         .foregroundStyle(.white)
                 } else {
-                    Text("\(song.trackNumber)")
+                    Text("\(viewModel.trackNumber)")
                         .font(.caption)
                         .fontWeight(.semibold)
                         .foregroundStyle(AppTheme.secondaryText)
@@ -34,18 +34,18 @@ struct SongRowView: View {
             .scaleEffect(pulse ? 1.1 : 1.0)
 
             VStack(alignment: .leading, spacing: 2) {
-                Text(song.title ?? "")
+                Text(viewModel.title)
                     .font(.body)
                     .fontWeight(.medium)
                     .foregroundStyle(isNowPlaying ? AppTheme.accent : AppTheme.primaryText)
-                Text(song.artist ?? "")
+                Text(viewModel.artist)
                     .font(.subheadline)
                     .foregroundStyle(AppTheme.secondaryText)
             }
 
             Spacer()
 
-            Text(song.formattedDuration)
+            Text(viewModel.formattedDuration)
                 .font(.caption)
                 .monospacedDigit()
                 .foregroundStyle(AppTheme.secondaryText)
