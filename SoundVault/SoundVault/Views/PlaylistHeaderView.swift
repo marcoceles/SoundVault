@@ -11,20 +11,19 @@ struct PlaylistHeaderView: View {
     let playlist: Playlist
     let songCount: Int
 
+    /// Decoded once per render; acceptable here because the header is a single
+    /// view (not a list row) and is rebuilt from scratch via `.id(playlistVersion)`
+    /// whenever the playlist is edited.
+    private var coverImage: UIImage? {
+        playlist.coverImageData.flatMap(UIImage.init(data:))
+    }
+
     var body: some View {
         ZStack {
-            Color(hex: playlist.artworkColor ?? "#888888")
-            Rectangle().fill(.ultraThinMaterial)
-
-            VStack {
-                Spacer()
-                LinearGradient(
-                    colors: [.clear, AppTheme.background.opacity(0.55)],
-                    startPoint: .top,
-                    endPoint: .bottom
-                )
-                .frame(height: 48)
-            }
+            PlaylistHeaderBackground(
+                artworkColor: playlist.artworkColor ?? "#888888",
+                coverImage: coverImage
+            )
 
             // MARK: - Content
             VStack(spacing: 16) {
@@ -33,7 +32,7 @@ struct PlaylistHeaderView: View {
                     coverImageData: playlist.coverImageData,
                     size: 160
                 )
-                .shadow(color: .black.opacity(0.14), radius: 10, y: 4)
+                .shadow(color: .black.opacity(0.2), radius: 10, y: 6)
 
                 VStack(spacing: 4) {
                     Text(playlist.name ?? "")
