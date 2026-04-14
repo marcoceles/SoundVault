@@ -28,8 +28,12 @@ struct PlaylistHeaderView: View {
 
             // MARK: - Content
             VStack(spacing: 16) {
-                PlaylistCoverView(playlist: playlist, size: 160)
-                    .shadow(color: .black.opacity(0.14), radius: 10, y: 4)
+                PlaylistCoverView(
+                    artworkColor: playlist.artworkColor ?? "#888888",
+                    coverImageData: playlist.coverImageData,
+                    size: 160
+                )
+                .shadow(color: .black.opacity(0.14), radius: 10, y: 4)
 
                 VStack(spacing: 4) {
                     Text(playlist.name ?? "")

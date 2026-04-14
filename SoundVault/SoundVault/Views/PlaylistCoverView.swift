@@ -8,14 +8,15 @@
 import SwiftUI
 
 struct PlaylistCoverView: View {
-    let playlist: Playlist
+    let artworkColor: String
+    let coverImageData: Data?
     let size: CGFloat
 
     @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
         Group {
-            if let data = playlist.coverImageData, let uiImage = UIImage(data: data) {
+            if let data = coverImageData, let uiImage = UIImage(data: data) {
                 Image(uiImage: uiImage)
                     .resizable()
                     .scaledToFill()
@@ -24,7 +25,7 @@ struct PlaylistCoverView: View {
             } else {
                 ZStack {
                     RoundedRectangle(cornerRadius: size * 0.19)
-                        .fill(Color(hex: playlist.artworkColor ?? "#888888"))
+                        .fill(Color(hex: artworkColor))
                     Image(systemName: "music.note")
                         .font(.system(size: size * 0.35))
                         .fontWeight(.semibold)
