@@ -197,7 +197,72 @@ Use a `NavigationStack`. Do not use `NavigationView`.
 
 ## UI IMPROVEMENTS
 
-- I noticed an empty state is missing for the playlist detail view when there are no songs. Use the same behaviour as per the Playlists List empty state.   
+- I noticed an empty state is missing for the playlist detail view when there are no songs. Use the same behaviour as per the Playlists List empty state.
+
+---
+
+I want to improve the visual design of the playlist header in `SongListView`.
+
+## Goal
+Use the playlist cover image as a blurred background for the header, positioned behind the main cover thumbnail, while preserving the playlist’s `artworkColor` as part of the background styling.
+
+## Requirements
+- The header in `SongListView` should use the playlist cover image as a large blurred background
+- The main cover thumbnail should remain visible in the foreground
+- The playlist’s `artworkColor` should still be part of the visual result if possible
+- The overall UI should feel polished, premium, and music-app inspired
+- The layout must work in both Light Mode and Dark Mode
+
+## Desired visual structure
+Build a layered header with this approximate composition:
+
+1. Background layer:
+   - the playlist cover image scaled to fill the header
+   - blurred enough to feel atmospheric, not distracting
+   - clipped cleanly to the header shape
+
+2. Color layer:
+   - incorporate the playlist’s `artworkColor`
+   - use it as a gradient, tint, or overlay blended with the blurred image
+   - the color should still be noticeable even when a custom image exists
+
+3. Readability layer:
+   - apply a subtle dark/transparent gradient or material if needed
+   - ensure text remains readable across bright and dark images
+
+4. Foreground content:
+   - cover thumbnail in front
+   - playlist title
+   - song count or supporting metadata
+
+## Technical guidance
+- Keep the implementation in pure SwiftUI
+- Prefer layered composition using `ZStack`, `overlay`, `background`, gradients, and materials
+- Avoid overcomplicated image processing
+- Convert image `Data` to displayable image in one controlled place
+- If the playlist has no custom image:
+  - still render a premium header
+  - use `artworkColor` as the main background identity
+  - keep the same layout structure
+
+## Performance expectations
+- Do not perform expensive image decoding repeatedly in list rows
+- Keep image decoding isolated to the header view
+- Use reusable components where appropriate
+- Avoid unnecessary recomputation during state updates
+
+## Suggested structure
+If useful, extract a reusable component such as:
+- `PlaylistHeaderView.swift`
+- `PlaylistHeaderBackground.swift`
+
+## Design direction
+Aim for something similar in spirit to Apple Music / media app headers:
+- immersive
+- soft depth
+- readable text
+- clear foreground hierarchy
+- elegant fallback when no image is available
 
 ---
 
