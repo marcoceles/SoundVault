@@ -11,8 +11,8 @@ import SwiftUI
 struct PlaylistListView: View {
     @State private var viewModel: PlaylistListViewModel
 
-    init(viewModel: PlaylistListViewModel = PlaylistListViewModel()) {
-        _viewModel = State(initialValue: viewModel)
+    init(viewModel: PlaylistListViewModel? = nil) {
+        _viewModel = State(initialValue: viewModel ?? PlaylistListViewModel())
     }
 
     var body: some View {
