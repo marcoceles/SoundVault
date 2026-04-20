@@ -7,7 +7,7 @@
 
 import CoreData
 
-@Observable
+@Observable @MainActor
 final class AddSongViewModel {
     var title = ""
     var artist = ""
@@ -18,10 +18,10 @@ final class AddSongViewModel {
 
     init(
         playlist: Playlist,
-        context: NSManagedObjectContext = PersistenceController.shared.container.viewContext
+        context: NSManagedObjectContext? = nil
     ) {
         self.playlist = playlist
-        self.context = context
+        self.context = context ?? PersistenceController.shared.container.viewContext
     }
 
     var isValid: Bool {
