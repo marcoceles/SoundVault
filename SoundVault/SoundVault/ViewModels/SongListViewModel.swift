@@ -7,7 +7,7 @@
 
 import CoreData
 
-@Observable
+@Observable @MainActor
 final class SongListViewModel: NSObject {
     private(set) var songViewModels: [SongRowViewModel] = []
     let playlist: Playlist
@@ -21,10 +21,10 @@ final class SongListViewModel: NSObject {
 
     init(
         playlist: Playlist,
-        context: NSManagedObjectContext = PersistenceController.shared.container.viewContext
+        context: NSManagedObjectContext? = nil
     ) {
         self.playlist = playlist
-        self.context = context
+        self.context = context ?? PersistenceController.shared.container.viewContext
         super.init()
 
         let request: NSFetchRequest<Song> = Song.fetchRequest()
@@ -33,7 +33,7 @@ final class SongListViewModel: NSObject {
         request.fetchBatchSize = 20
         frc = NSFetchedResultsController(
             fetchRequest: request,
-            managedObjectContext: context,
+			managedObjectContext: self.context,
             sectionNameKeyPath: nil,
             cacheName: nil
         )

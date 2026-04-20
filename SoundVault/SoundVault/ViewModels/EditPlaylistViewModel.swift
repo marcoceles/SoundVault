@@ -9,7 +9,7 @@ import CoreData
 import UIKit
 import _PhotosUI_SwiftUI
 
-@Observable
+@Observable @MainActor
 final class EditPlaylistViewModel {
     var name: String
     var selectedImageData: Data?
@@ -21,10 +21,10 @@ final class EditPlaylistViewModel {
 
     init(
         playlist: Playlist,
-        context: NSManagedObjectContext = PersistenceController.shared.container.viewContext
+        context: NSManagedObjectContext? = nil
     ) {
         self.playlist = playlist
-        self.context = context
+        self.context = context ?? PersistenceController.shared.container.viewContext
         self.name = playlist.name ?? ""
         self.selectedImageData = playlist.coverImageData
         self.previewImage = playlist.coverImage

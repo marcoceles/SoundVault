@@ -9,7 +9,7 @@ import CoreData
 import UIKit
 import _PhotosUI_SwiftUI
 
-@Observable
+@Observable @MainActor
 final class AddPlaylistViewModel {
     var name = ""
     var selectedImageData: Data?
@@ -22,8 +22,8 @@ final class AddPlaylistViewModel {
         "#F9A825", "#C77DFF", "#FF9F43", "#00B894"
     ]
 
-    init(context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
-        self.context = context
+    init(context: NSManagedObjectContext? = nil) {
+        self.context = context ?? PersistenceController.shared.container.viewContext
     }
 
     var isValid: Bool {
