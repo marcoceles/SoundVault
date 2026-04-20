@@ -14,8 +14,8 @@ struct AddPlaylistSheet: View {
     @State private var viewModel: AddPlaylistViewModel
     @State private var selectedItem: PhotosPickerItem?
 
-    init(viewModel: AddPlaylistViewModel = AddPlaylistViewModel()) {
-        _viewModel = State(initialValue: viewModel)
+    init(viewModel: AddPlaylistViewModel? = nil) {
+        _viewModel = State(initialValue: viewModel ?? AddPlaylistViewModel())
     }
 
     var body: some View {
