@@ -7,17 +7,16 @@
 
 import CoreData
 
-@Observable
+@Observable @MainActor
 final class PlaylistListViewModel: NSObject {
     private(set) var rowViewModels: [PlaylistRowViewModel] = []
     var showingAddSheet = false
 
     private let context: NSManagedObjectContext
     private var frc: NSFetchedResultsController<Playlist>!
-    private var contextObserver: NSObjectProtocol?
 
-    init(context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
-        self.context = context
+    init(context: NSManagedObjectContext? = nil) {
+        self.context = context ?? PersistenceController.shared.container.viewContext
         super.init()
 
         let request: NSFetchRequest<Playlist> = Playlist.fetchRequest()
@@ -25,7 +24,7 @@ final class PlaylistListViewModel: NSObject {
         request.fetchBatchSize = 20
         frc = NSFetchedResultsController(
             fetchRequest: request,
-            managedObjectContext: context,
+			managedObjectContext: self.context,
             sectionNameKeyPath: nil,
             cacheName: nil
         )
@@ -33,19 +32,16 @@ final class PlaylistListViewModel: NSObject {
         try? frc.performFetch()
         rowViewModels = (frc.fetchedObjects ?? []).map(PlaylistRowViewModel.init)
 
-        contextObserver = NotificationCenter.default.addObserver(
-            forName: NSManagedObjectContext.didChangeObjectsNotification,
-            object: context,
-            queue: .main
-        ) { [weak self] notification in
-            self?.handleContextChange(notification)
-        }
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(contextDidChange(_:)),
+            name: NSManagedObjectContext.didChangeObjectsNotification,
+            object: self.context
+        )
     }
 
     deinit {
-        if let observer = contextObserver {
-            NotificationCenter.default.removeObserver(observer)
-        }
+        NotificationCenter.default.removeObserver(self)
     }
 
     func delete(at offsets: IndexSet) {
@@ -54,6 +50,12 @@ final class PlaylistListViewModel: NSObject {
     }
 
     // MARK: - Private
+
+    @objc private func contextDidChange(_ notification: Notification) {
+        Task { @MainActor in
+            self.handleContextChange(notification)
+        }
+    }
 
     private func handleContextChange(_ notification: Notification) {
         guard let updated = notification.userInfo?[NSUpdatedObjectsKey] as? Set<NSManagedObject> else { return }
