@@ -52,7 +52,7 @@ struct AddSongViewModelTests {
         vm.save()
 
         let request: NSFetchRequest<Song> = Song.fetchRequest()
-        request.predicate = NSPredicate(format: "playlist == %@", playlist)
+        request.predicate = NSPredicate(format: "ANY playlists == %@", playlist)
         let songs = try context.fetch(request)
         #expect(songs.count == 1)
         #expect(songs.first?.title == "Imagine")
@@ -68,7 +68,7 @@ struct AddSongViewModelTests {
         vm.save()
 
         let request: NSFetchRequest<Song> = Song.fetchRequest()
-        request.predicate = NSPredicate(format: "playlist == %@", playlist)
+        request.predicate = NSPredicate(format: "ANY playlists == %@", playlist)
         let songs = try context.fetch(request)
         #expect(songs.first?.duration == 0)
     }
