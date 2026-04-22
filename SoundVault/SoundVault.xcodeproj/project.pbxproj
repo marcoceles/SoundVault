@@ -6,11 +6,27 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXContainerItemProxy section */
+		361753282F9910A100FAAB68 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 36D328DE2F8D1F2100391555 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 36D328E52F8D1F2100391555;
+			remoteInfo = SoundVault;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		361753242F9910A100FAAB68 /* SoundVaultTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SoundVaultTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		36D328E62F8D1F2100391555 /* SoundVault.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoundVault.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		361753252F9910A100FAAB68 /* SoundVaultTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = SoundVaultTests;
+			sourceTree = "<group>";
+		};
 		36D328E82F8D1F2100391555 /* SoundVault */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = SoundVault;
@@ -19,6 +35,13 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		361753212F9910A100FAAB68 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		36D328E32F8D1F2100391555 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -33,6 +56,7 @@
 			isa = PBXGroup;
 			children = (
 				36D328E82F8D1F2100391555 /* SoundVault */,
+				361753252F9910A100FAAB68 /* SoundVaultTests */,
 				36D328E72F8D1F2100391555 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -41,6 +65,7 @@
 			isa = PBXGroup;
 			children = (
 				36D328E62F8D1F2100391555 /* SoundVault.app */,
+				361753242F9910A100FAAB68 /* SoundVaultTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -48,6 +73,29 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		361753232F9910A100FAAB68 /* SoundVaultTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3617532C2F9910A100FAAB68 /* Build configuration list for PBXNativeTarget "SoundVaultTests" */;
+			buildPhases = (
+				361753202F9910A100FAAB68 /* Sources */,
+				361753212F9910A100FAAB68 /* Frameworks */,
+				361753222F9910A100FAAB68 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				361753292F9910A100FAAB68 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				361753252F9910A100FAAB68 /* SoundVaultTests */,
+			);
+			name = SoundVaultTests;
+			packageProductDependencies = (
+			);
+			productName = SoundVaultTests;
+			productReference = 361753242F9910A100FAAB68 /* SoundVaultTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		36D328E52F8D1F2100391555 /* SoundVault */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 36D328F62F8D1F2200391555 /* Build configuration list for PBXNativeTarget "SoundVault" */;
@@ -77,9 +125,13 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 2630;
+				LastSwiftUpdateCheck = 2640;
 				LastUpgradeCheck = 2630;
 				TargetAttributes = {
+					361753232F9910A100FAAB68 = {
+						CreatedOnToolsVersion = 26.4.1;
+						TestTargetID = 36D328E52F8D1F2100391555;
+					};
 					36D328E52F8D1F2100391555 = {
 						CreatedOnToolsVersion = 26.3;
 					};
@@ -100,11 +152,19 @@
 			projectRoot = "";
 			targets = (
 				36D328E52F8D1F2100391555 /* SoundVault */,
+				361753232F9910A100FAAB68 /* SoundVaultTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		361753222F9910A100FAAB68 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		36D328E42F8D1F2100391555 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -115,6 +175,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		361753202F9910A100FAAB68 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		36D328E22F8D1F2100391555 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -124,7 +191,59 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		361753292F9910A100FAAB68 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 36D328E52F8D1F2100391555 /* SoundVault */;
+			targetProxy = 361753282F9910A100FAAB68 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		3617532A2F9910A100FAAB68 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 36PPD9U57M;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = it.celes.SoundVaultTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SoundVault.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/SoundVault";
+			};
+			name = Debug;
+		};
+		3617532B2F9910A100FAAB68 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 36PPD9U57M;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = it.celes.SoundVaultTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SoundVault.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/SoundVault";
+			};
+			name = Release;
+		};
 		36D328F42F8D1F2200391555 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -313,6 +432,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		3617532C2F9910A100FAAB68 /* Build configuration list for PBXNativeTarget "SoundVaultTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3617532A2F9910A100FAAB68 /* Debug */,
+				3617532B2F9910A100FAAB68 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		36D328E12F8D1F2100391555 /* Build configuration list for PBXProject "SoundVault" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
