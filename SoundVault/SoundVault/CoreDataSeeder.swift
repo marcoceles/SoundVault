@@ -26,7 +26,7 @@ struct CoreDataSeeder {
                 song.artist = songDTO.artist
                 song.duration = songDTO.duration
                 song.trackNumber = Int16(trackIndex + 1)
-                song.playlist = playlist
+				playlist.addToSongs(song)
             }
         }
     }

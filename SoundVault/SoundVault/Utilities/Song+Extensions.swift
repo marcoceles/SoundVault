@@ -9,4 +9,9 @@ extension Song {
     var formattedDuration: String {
         TimeFormatter.format(seconds: duration)
     }
+
+    var sourceLabel: String {
+        let names = (playlists as? Set<Playlist> ?? []).compactMap(\.name).sorted()
+        return names.isEmpty ? "Not in any playlist" : names.joined(separator: ", ")
+    }
 }

@@ -36,7 +36,7 @@ final class AddSongViewModel {
         song.artist = artist.trimmingCharacters(in: .whitespaces)
         song.duration = Double(durationText) ?? 0
         song.trackNumber = Int16((playlist.songs?.count ?? 0) + 1)
-        song.playlist = playlist
+        playlist.addToSongs(song)
         PersistenceController.shared.save(context)
     }
 }

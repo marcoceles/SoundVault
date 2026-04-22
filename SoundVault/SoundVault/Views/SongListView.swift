@@ -91,7 +91,7 @@ struct SongListView: View {
                 .font(.title3)
                 .fontWeight(.semibold)
                 .foregroundStyle(AppTheme.primaryText)
-            Text("Tap + to add one.")
+            Text("Tap + to add a song.")
                 .font(.subheadline)
                 .foregroundStyle(AppTheme.secondaryText)
         }

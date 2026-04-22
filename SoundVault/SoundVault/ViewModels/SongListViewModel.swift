@@ -28,7 +28,7 @@ final class SongListViewModel: NSObject {
         super.init()
 
         let request: NSFetchRequest<Song> = Song.fetchRequest()
-        request.predicate = NSPredicate(format: "playlist == %@", playlist)
+        request.predicate = NSPredicate(format: "ANY playlists == %@", playlist)
         request.sortDescriptors = [NSSortDescriptor(keyPath: \Song.trackNumber, ascending: true)]
         request.fetchBatchSize = 20
         frc = NSFetchedResultsController(
@@ -44,7 +44,7 @@ final class SongListViewModel: NSObject {
     }
 
     func delete(at offsets: IndexSet) {
-        offsets.map { songViewModels[$0].song }.forEach(context.delete)
+        offsets.map { songViewModels[$0].song }.forEach { playlist.removeFromSongs($0) }
         PersistenceController.shared.save(context)
     }
 
