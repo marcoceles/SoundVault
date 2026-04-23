@@ -20,7 +20,13 @@ struct SongListView: View {
             AppTheme.background.ignoresSafeArea()
 
             if viewModel.songViewModels.isEmpty {
-                emptyState
+                ContentUnavailableView {
+                    Label("No Songs Yet", systemImage: "music.note.list")
+                        .symbolEffect(.variableColor.iterative.reversing)
+                } description: {
+                    Text("Tap + to add one.")
+                }
+                .tint(AppTheme.accent)
             } else {
                 List {
                     // MARK: - Header
@@ -55,16 +61,12 @@ struct SongListView: View {
         .navigationTitle(viewModel.playlist.name ?? "")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button {
-                    viewModel.showingAddSheet = true
-                } label: {
-                    Image(systemName: "plus")
-                        .fontWeight(.semibold)
-                }
-                .tint(AppTheme.accent)
+            ToolbarItem(placement: .topBarTrailing) {
+                Button("Add Song", systemImage: "plus", action: { viewModel.showingAddSheet = true })
+                    .fontWeight(.semibold)
+                    .tint(AppTheme.accent)
             }
-            ToolbarItem(placement: .navigationBarLeading) {
+            ToolbarItem(placement: .topBarLeading) {
                 Button("Edit") {
                     viewModel.showingEditSheet = true
                 }
@@ -80,28 +82,13 @@ struct SongListView: View {
             EditPlaylistSheet(playlist: viewModel.playlist)
         }
     }
-
-    private var emptyState: some View {
-        VStack(spacing: 16) {
-            Image(systemName: "music.note.list")
-                .font(.system(size: 56))
-                .foregroundStyle(AppTheme.accent)
-                .symbolEffect(.variableColor.iterative.reversing)
-            Text("No songs yet.")
-                .font(.title3)
-                .fontWeight(.semibold)
-                .foregroundStyle(AppTheme.primaryText)
-            Text("Tap + to add a song.")
-                .font(.subheadline)
-                .foregroundStyle(AppTheme.secondaryText)
-        }
-    }
 }
 
 #Preview {
     let context = PersistenceController.preview.container.viewContext
-    let playlist = try! context.fetch(Playlist.fetchRequest()).first!
-    return NavigationStack {
-        SongListView(playlist: playlist)
+    if let playlist = try? context.fetch(Playlist.fetchRequest()).first {
+        NavigationStack {
+            SongListView(playlist: playlist)
+        }
     }
 }
