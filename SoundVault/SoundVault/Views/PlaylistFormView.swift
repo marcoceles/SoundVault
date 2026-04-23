@@ -28,15 +28,12 @@ struct PlaylistFormView: View {
                                     .resizable()
                                     .scaledToFill()
                                     .frame(width: 80, height: 80)
-                                    .clipShape(RoundedRectangle(cornerRadius: 15))
+                                    .clipShape(.rect(cornerRadius: 15))
                             } else {
                                 RoundedRectangle(cornerRadius: 15)
                                     .fill(AppTheme.surface)
+                                    .stroke(AppTheme.secondaryText.opacity(0.3), lineWidth: 1)
                                     .frame(width: 80, height: 80)
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: 15)
-                                            .strokeBorder(AppTheme.secondaryText.opacity(0.3), lineWidth: 1)
-                                    )
                                 if isLoadingImage {
                                     ProgressView()
                                 } else {
