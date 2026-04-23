@@ -20,7 +20,13 @@ struct PlaylistListView: View {
             AppTheme.background.ignoresSafeArea()
 
             if viewModel.rowViewModels.isEmpty {
-                emptyState
+                ContentUnavailableView {
+                    Label("No Playlists Yet", systemImage: "waveform")
+                        .symbolEffect(.variableColor.iterative.reversing)
+                } description: {
+                    Text("Tap + to create one.")
+                }
+                .tint(AppTheme.accent)
             } else {
                 List {
                     ForEach(viewModel.rowViewModels) { rowVM in
@@ -42,34 +48,14 @@ struct PlaylistListView: View {
         }
         .navigationTitle("SoundVault")
         .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button {
-                    viewModel.showingAddSheet = true
-                } label: {
-                    Image(systemName: "plus")
-                        .fontWeight(.semibold)
-                }
-                .tint(AppTheme.accent)
+            ToolbarItem(placement: .topBarTrailing) {
+                Button("Add Playlist", systemImage: "plus", action: { viewModel.showingAddSheet = true })
+                    .fontWeight(.semibold)
+                    .tint(AppTheme.accent)
             }
         }
         .sheet(isPresented: $viewModel.showingAddSheet) {
             AddPlaylistSheet()
-        }
-    }
-
-    private var emptyState: some View {
-        VStack(spacing: 16) {
-            Image(systemName: "waveform")
-                .font(.system(size: 56))
-                .foregroundStyle(AppTheme.accent)
-                .symbolEffect(.variableColor.iterative.reversing)
-            Text("No playlists yet.")
-                .font(.title3)
-                .fontWeight(.semibold)
-                .foregroundStyle(AppTheme.primaryText)
-            Text("Tap + to create one.")
-                .font(.subheadline)
-                .foregroundStyle(AppTheme.secondaryText)
         }
     }
 }

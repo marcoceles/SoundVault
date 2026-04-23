@@ -41,7 +41,7 @@ struct PlaylistHeaderView: View {
                         .foregroundStyle(AppTheme.primaryText)
                         .multilineTextAlignment(.center)
 
-                    Text(songCount == 1 ? "1 song" : "\(songCount) songs")
+                    Text("^[\(songCount) song](inflect: true)")
                         .font(.subheadline)
                         .foregroundStyle(AppTheme.secondaryText)
                 }
