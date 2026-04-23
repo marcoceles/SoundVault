@@ -23,7 +23,7 @@ struct PlaylistRowView: View {
                     .font(.title3)
                     .fontWeight(.semibold)
                     .foregroundStyle(AppTheme.primaryText)
-                Text("\(viewModel.songCount) songs")
+                Text("^[\(viewModel.songCount) song](inflect: true)")
                     .font(.subheadline)
                     .foregroundStyle(AppTheme.secondaryText)
             }

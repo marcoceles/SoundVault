@@ -21,7 +21,7 @@ struct PlaylistCoverView: View {
                     .resizable()
                     .scaledToFill()
                     .frame(width: size, height: size)
-                    .clipShape(RoundedRectangle(cornerRadius: size * 0.19))
+                    .clipShape(.rect(cornerRadius: size * 0.19))
             } else {
                 ZStack {
                     RoundedRectangle(cornerRadius: size * 0.19)
