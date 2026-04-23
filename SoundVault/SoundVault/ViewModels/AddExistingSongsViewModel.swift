@@ -66,6 +66,11 @@ final class AddExistingSongsViewModel {
         PersistenceController.shared.save(context)
     }
 
+    var groupedBySource: [(key: String, songs: [Song])] {
+        let grouped = Dictionary(grouping: availableSongs, by: \.sourceLabel)
+        return grouped.keys.sorted().map { (key: $0, songs: grouped[$0] ?? []) }
+    }
+
     // MARK: - Private
 
     private func fetchAvailableSongs() {
