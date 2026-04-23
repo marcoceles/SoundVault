@@ -21,6 +21,11 @@ final class AddExistingSongsViewModel {
         fetchAvailableSongs()
     }
 
+   var groupedBySource: [(key: String, songs: [Song])] {
+        let grouped = Dictionary(grouping: availableSongs, by: \.sourceLabel)
+        return grouped.keys.sorted().map { (key: $0, songs: grouped[$0] ?? []) }
+    }
+  
     // MARK: - Selection
 
     var canConfirm: Bool { !selectedIDs.isEmpty }
@@ -64,11 +69,6 @@ final class AddExistingSongsViewModel {
             nextTrack += 1
         }
         PersistenceController.shared.save(context)
-    }
-
-    var groupedBySource: [(key: String, songs: [Song])] {
-        let grouped = Dictionary(grouping: availableSongs, by: \.sourceLabel)
-        return grouped.keys.sorted().map { (key: $0, songs: grouped[$0] ?? []) }
     }
 
     // MARK: - Private
