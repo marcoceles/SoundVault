@@ -82,25 +82,6 @@ struct SongListView: View {
             EditPlaylistSheet(playlist: viewModel.playlist)
         }
     }
-<<<<<<< feature/add-existing-songs
-
-    private var emptyState: some View {
-        VStack(spacing: 16) {
-            Image(systemName: "music.note.list")
-                .font(.system(size: 56))
-                .foregroundStyle(AppTheme.accent)
-                .symbolEffect(.variableColor.iterative.reversing)
-            Text("No songs yet.")
-                .font(.title3)
-                .fontWeight(.semibold)
-                .foregroundStyle(AppTheme.primaryText)
-            Text("Tap + to add a song.")
-                .font(.subheadline)
-                .foregroundStyle(AppTheme.secondaryText)
-        }
-    }
-=======
->>>>>>> main
 }
 
 #Preview {
